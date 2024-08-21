@@ -29,3 +29,5 @@ At first, I had all my read commands come after the echo message of "Pick 'x' or
 **After:**
 
 ![image](https://github.com/user-attachments/assets/b5c8ac17-c296-46dd-b25f-351f00672584)
+
+After testing a ton, I started to get tired of having to cycle through my intro story to get to the prompts. I researched if there was a way to skip certains part of script using user input and found that I just needed to include another if loop that included the whole intro that only ran if a user wanted it to. So, before the if loop I used the `read -p` command to ask the user to enter y/n whether or not they wanted to skip the intro, and based on the response the if loop would initiate the introduction, or skip to the first prompt. This helped me a lot with saving time when it came to testing out my prompts.  
