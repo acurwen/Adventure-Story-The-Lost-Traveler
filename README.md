@@ -1,9 +1,9 @@
 # Adventure Story: The Lost Traveler
 
 For this project, I created my own text-based interactive "Adventure Story" using my knowledge of loops and conditionals within Bash scripting. 
-The Adventure Story, called "The Lost Traveler", allows the player to navigate through a series of choices while stuck on a stranded island.
+My adventure story, called "The Lost Traveler", allows the player to navigate through a series of choices while stuck on a stranded island.
 
-When starting this project, I initially dove into writing a story while creating my if statements. However, as the script grew it got harder and harder to keep track of all the options I wrote and the neted options for those options and so on and so forth. 
+When starting this project, I initially dove into writing a story while creating my if statements. However, as the script grew, it became increasingly difficult to keep track of all the options I wrote and the nested options for those options and so on and so forth. 
 
 I decided to start over with a "skeleton" version of my original adventure script to focus on structure and usability than the actual content of the story. That way I wasn't inundated by several lines of story while trying to edit. Then, when I confirmed through testing that my skeletal structure worked as intended, I added back in the lines of my story and was able to clearly see where new ones were needed.
 
@@ -13,33 +13,66 @@ In addition, I started creating my adventure story script in my instance, but af
 
 To read output from the user, I used the `read` command and prompted the user with two options throughout the game: typing "r" or "l" to signify one of two options. With my skeletal script, I realized I could keep those same two variables throughout which made editing the script easier. 
 
-Then, I created my series of nested if and elif loops that output a new set of options to the player based on the choices they typed in. To keep the game going, I used another read command at the end of each if clause to start a new if statement. 
+Then, I created my series of nested if and elif loops that output a new set of options to the player based on the choices they typed in. Through testing the first text-loaded version of my script, I realized I needed a few things covered:
 
-Upon testing, I realized I needed a way to flag if a user typed a different input than "r" or "l" (or y/n). For every block of code that required a read input, I wrote a while loop outside of the read input. Then an if statement that said if input = r OR if input = l then break from the if statement. If not, then an error message would show and the user would be prompted with the same read -p command that was in the outer while loop. 
+First off, was a way to flag if a user typed a different input than "r" or "l" (or y/n), a way to throw an error message if they did, and also how to prompt them the same message so they can input an accepted input. 
 
+To do this, I wrote a while loop outside of every block of code that included a read -p input. Then, after the read -p command, I wrote an if statement that had the condition of "if input = r OR if input = l" (specifically for my skip intro section). If the condition was met, there'd be a break from the if statement. If not, then my error message would print to the user and the user would also be prompted with the same read -p message that is within the outer while loop. 
 
+![image](https://github.com/user-attachments/assets/afe2f142-10fa-43f6-91af-1a4e581ddb13)
 
-Including an echo message at every step was helpful in testing this out. 
+At first, I mirrored this setup for the rest of my actual game prompts, but it got difficult trying to set the "then" outcome for each 'l' or 'r' option since I was grouping both conditions together in one if statement. So I changed to an if, elif, else approach which I liked much better. 
 
-as my script grew larger i added in psedo code titles to keep track of sections like introudction, ooffical game start point, and the "levels" of each if statement. i aslo managed to always keep the user input to 'x' or 'y' and kept the variable choice the same throughout ewhich was helpful for wuicker writing 
-
-
-once i figured out the nested loop structure for one path ; i tested it out and then copied and pasted it for the second half path that starts with choosing the choice of 'y' or 'l'. since i stick with the same two variable chocies, I was able to make anothr function that checked if the user's input was correct and if it was not correct it would prompt the user to re enter a correct answer. 
-
-
-
-Here is the first snapshot of my script's structure:
-At first, I have a while loop that prompts the user if they'd like to skip the intro.
-
-
-![image](https://github.com/user-attachments/assets/26ad4b33-460b-438e-b6a1-0ec55686f4bb)
-
-Then when the game "starts", I have another a while loop that checks if the user inputted one of the two choices. If not, it throws an error message that prompts the user to try again. If they did input the correct answer, then a nested while loop for either answer takes over. Once i checked that this worked well, i aws able to keep going with more nested if loops.
-
+First Draft:
 ![image](https://github.com/user-attachments/assets/45ef992c-ebd4-4019-8a1a-6aa3a916dfac)
 
+For my actual game prompts, I split up my if statement into three conditions: 1 `if` condition, 1 `elif` condition and 1 `else` condition, all in one `if` statement. 
+
+Again, I wrote a while loop outside of every block of code that included a read -p input. 
+Then, after the read -p command, I wrote an if condition for if the input was equal to 'r'. If it was, then I included a series of echo messages outlining the consequence of picking 'r'. 
+Then I wrote an elif condition in that same if statement for if the input was equal to 'l'. Again, what followed was a series of echo messages outlining the consequence of picking 'r'. 
+Finally, the "else" section encompassed any condition where the user input is not 'r' or 'l', so technically an incorrect input. There I included an error message stating that the input was invalid and to pick either 'r' or 'l'. Again, because this 3-part if statement is nested within a while loop, after the user receives the error message, they would be prompted again with the read -p command that's within the while loop (and outside of the if statement).
+
+Once I tested and saw that this structure worked, I copied the code chunk of my while loop and pasted it each time a path in my story led to another set of decisions the user had to make. Having this structure tested and ready to go made building upon the story much less of a headache.
+
+To create and keep track of my story, I used a text editor (Google Docs) where I color coded the "information pairs" of each game "path". So if I had a path where the user could pick either 'r' or 'l', I wrote the text for both options in blue. Then, if the user picked 'r', the text I wrote for the two new paths that become available after picking 'r' would be in green. Then as I added in my story lines, I would bold the text that I had already entered to keep track of where I was. In addition, with my while loop code block template I explained above, I was able to expand each path easily by pasting in my while loop and then editing the echo and read-p lines with my text ready. 
+
+This way of drafting kept me organized as I was starting to overwhelm myself with the amount of text I had written. And it was a lot easier to create my script this way in comparison to writing my game story out while creating each new while loop nest (how I had initially approached this assignment). 
 
 
+Example of While loop template:
+```
+while true
+do
+    read -p "Do you put the bottle down in the hole? (r) or keep the bottle in your pocket? (l): " choice
+
+     # If user picks 'r'.
+     if  [ "$choice" == "r" ]
+     then
+       echo "You picked '$choice'."
+       sleep 2
+       echo "The End!"
+       return
+                                        
+      # If user picks 'l'.
+      elif [ "$choice" == "l" ]
+      then
+          echo "You picked '$choice'."
+          sleep 2
+          echo "The End!"
+          return
+
+       # If user picks neither
+        else 
+             echo "Input not valid. Please enter either 'r' or 'l'."   
+        fi
+done 
+
+```
+
+Also for testing, I included an echo message that printed what the user typed in for each prompt (before the story text printed). This helped me verify that I wrote my text in the correct order and the user's response corresponded with the right text. Though, after a while of testing, I realize that the echo messages sort of broke the game immersion, so I commented those lines out. 
+
+As my script grew larger, I also added in psuedo code titles to keep track of sections like the Introduction, the offical start point of the game, and most importantly, the conditions of each if statement. Excluding the prompts for replay and skipping the intro, I also kept the user input to either be 'r' or 'l' and kept the variable "choice" the same throughout the script which was super helpful for expanding the story and I think also eaasier for the game player. Testing out my skeletal script first, helped me realize I didn't have to keep using new variables each time. 
 
 
 **Introduction:**
